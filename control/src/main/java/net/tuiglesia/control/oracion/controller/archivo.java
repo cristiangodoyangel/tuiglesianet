@@ -1,0 +1,1 @@
+# Forzar actualización visual del módulo control-inventario
