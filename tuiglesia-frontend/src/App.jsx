@@ -1,9 +1,9 @@
-import Registro from "./pages/Registro";
+import Login from "./pages/login";
 
 function App() {
   return (
     <div className="h-screen flex items-center justify-center">
-      <Registro />
+      <Login />
     </div>
   );
 }
