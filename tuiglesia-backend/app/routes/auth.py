@@ -7,6 +7,15 @@ from passlib.hash import bcrypt
 
 router = APIRouter()
 
+@router.post("/login")
+def login(data: dict, db: Session = Depends(get_db)):
+    email = data.get("email")
+    password = data.get("password")
+    user = db.query(user_model.Usuario).filter_by(email=email).first()
+    if not user or not bcrypt.verify(password, user.password_hash):
+        raise HTTPException(status_code=401, detail="Credenciales incorrectas")
+    return {"msg": "Login exitoso", "user": {"email": user.email, "nombre": user.nombre}}
+
 def get_db():
     db = SessionLocal()
     try:

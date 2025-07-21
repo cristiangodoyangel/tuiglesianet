@@ -1,15 +1,38 @@
 // src/pages/Login.jsx
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png"; // Asegúrate de tenerlo en src/assets
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aquí irá el fetch al backend
-    console.log("Login:", { email, password });
+    setError("");
+    setLoading(true);
+    try {
+      const resp = await fetch("http://localhost:8000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+      if (!resp.ok) {
+        const data = await resp.json();
+        setError(data.detail || "Credenciales incorrectas");
+        setLoading(false);
+        return;
+      }
+      // Si login exitoso
+      setLoading(false);
+      navigate("/dashboard");
+    } catch (err) {
+      setError("Error de conexión con el servidor");
+      setLoading(false);
+    }
   };
 
   return (
@@ -27,6 +50,7 @@ export default function Login() {
             <img src={logo} alt="TuIglesia.net" className="h-16" />
           </div>
           <h2 className="text-2xl font-bold text-center text-[#040142] mb-4">Iniciar sesión</h2>
+          {error && <div className="mb-3 text-red-600 text-center font-semibold">{error}</div>}
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label className="block text-sm font-medium text-gray-700">Correo electrónico</label>
@@ -52,9 +76,10 @@ export default function Login() {
             </div>
             <button
               type="submit"
-              className="w-full bg-yellow-400 hover:bg-yellow-500 text-[#1e293b] font-semibold py-2 rounded-lg transition"
+              className="w-full bg-yellow-400 hover:bg-yellow-500 text-[#1e293b] font-semibold py-2 rounded-lg transition disabled:opacity-60"
+              disabled={loading}
             >
-              Iniciar sesión
+              {loading ? "Ingresando..." : "Iniciar sesión"}
             </button>
           </form>
         </div>
