@@ -1,100 +1,103 @@
-from django.db import models
-from django.contrib.auth.models import AbstractUser
+# core/models.py
+# Borra todo el contenido actual y reemplázalo con esto:
 
-class Church(models.Model):
-    PLAN_CHOICES = [
-        ('free', 'Gratis'),
-        ('premium', 'Premium'),
-    ]
-    
-    name = models.CharField('Nombre', max_length=200)
-    city = models.CharField('Ciudad', max_length=100)
-    logo_url = models.URLField('Logo URL', blank=True, null=True)
-    plan = models.CharField('Plan', max_length=10, choices=PLAN_CHOICES, default='free')
-    created_at = models.DateTimeField('Fecha de creación', auto_now_add=True)
+import uuid
+from django.db import models
+
+class Iglesia(models.Model):
+    id = models.CharField(max_length=36, primary_key=True, default=uuid.uuid4, editable=False)
+    nombre = models.CharField(max_length=255)
+    ciudad = models.CharField(max_length=100, blank=True, null=True)
+    logo_url = models.TextField(blank=True, null=True)
+    creada_en = models.DateTimeField(auto_now_add=True)
     
     class Meta:
+        db_table = 'iglesias'
         verbose_name = 'Iglesia'
         verbose_name_plural = 'Iglesias'
     
     def __str__(self):
-        return self.name
+        return self.nombre
 
-class User(AbstractUser):
-    ROLE_CHOICES = [
-        ('owner', 'Propietario'),
+class Usuario(models.Model):
+    ROL_CHOICES = [
+        ('pastor', 'Pastor'),
         ('admin', 'Administrador'),
     ]
     
-    church = models.ForeignKey(Church, on_delete=models.CASCADE, related_name='users', verbose_name='Iglesia')
-    role = models.CharField('Rol', max_length=10, choices=ROLE_CHOICES, default='admin')
-    full_name = models.CharField('Nombre completo', max_length=200)
+    id = models.CharField(max_length=36, primary_key=True, default=uuid.uuid4, editable=False)
+    nombre = models.CharField(max_length=255)
+    email = models.CharField(max_length=255, unique=True)
+    password_hash = models.CharField(max_length=255)
+    rol = models.CharField(max_length=10, choices=ROL_CHOICES)
+    iglesia = models.ForeignKey(Iglesia, on_delete=models.CASCADE, db_column='iglesia_id')
+    creado_en = models.DateTimeField(auto_now_add=True)
     
     class Meta:
+        db_table = 'usuarios'
         verbose_name = 'Usuario'
         verbose_name_plural = 'Usuarios'
     
     def __str__(self):
-        return f"{self.full_name} ({self.church.name})"
+        return f"{self.nombre} ({self.iglesia.nombre})"
 
-class Member(models.Model):
-    church = models.ForeignKey(Church, on_delete=models.CASCADE, related_name='members')
-    full_name = models.CharField('Nombre completo', max_length=200)
-    age = models.IntegerField('Edad')
-    phone = models.CharField('Teléfono', max_length=20)
-    city_sector = models.CharField('Sector de la ciudad', max_length=100)
-    department_ministry = models.CharField('Departamento/Ministerio', max_length=100)
-    position = models.CharField('Cargo', max_length=100, blank=True)
-    baptism_date = models.DateField('Fecha de bautismo', null=True, blank=True)
-    discipleship_completed = models.BooleanField('Discipulado completado', default=False)
-    created_at = models.DateTimeField('Fecha de registro', auto_now_add=True)
+class Miembro(models.Model):
+    id = models.CharField(max_length=36, primary_key=True, default=uuid.uuid4, editable=False)
+    iglesia = models.ForeignKey(Iglesia, on_delete=models.CASCADE, db_column='iglesia_id')
+    nombre = models.CharField(max_length=255)
+    edad = models.IntegerField(blank=True, null=True)
+    telefono = models.CharField(max_length=20, blank=True, null=True)
+    sector = models.CharField(max_length=100, blank=True, null=True)
+    ministerio = models.CharField(max_length=100, blank=True, null=True)
+    cargo = models.CharField(max_length=100, blank=True, null=True)
+    bautismo = models.BooleanField(default=False)
+    discipulado = models.BooleanField(default=False)
+    creado_en = models.DateTimeField(auto_now_add=True)
     
     class Meta:
+        db_table = 'miembros'
         verbose_name = 'Miembro'
         verbose_name_plural = 'Miembros'
     
     def __str__(self):
-        return f"{self.full_name} - {self.church.name}"
+        return f"{self.nombre} - {self.iglesia.nombre}"
 
-class PrayerRequest(models.Model):
-    STATUS_CHOICES = [
-        ('pending', 'Pendiente'),
-        ('answered', 'Respondida'),
-    ]
-    
-    church = models.ForeignKey(Church, on_delete=models.CASCADE, related_name='prayer_requests')
-    requester_name = models.CharField('Solicitante', max_length=200)
-    prayer_for = models.CharField('Oración para', max_length=200)
-    reason = models.TextField('Motivo')
-    status = models.CharField('Estado', max_length=10, choices=STATUS_CHOICES, default='pending')
-    created_at = models.DateTimeField('Fecha de solicitud', auto_now_add=True)
+class NuevoMiembro(models.Model):
+    id = models.CharField(max_length=36, primary_key=True, default=uuid.uuid4, editable=False)
+    iglesia = models.ForeignKey(Iglesia, on_delete=models.CASCADE, db_column='iglesia_id')
+    nombre = models.CharField(max_length=255)
+    edad = models.IntegerField(blank=True, null=True)
+    telefono = models.CharField(max_length=20, blank=True, null=True)
+    invitado_por = models.CharField(max_length=255, blank=True, null=True)
+    notas_seguimiento = models.TextField(blank=True, null=True)
+    fecha_ingreso = models.DateField(auto_now_add=True)
     
     class Meta:
-        verbose_name = 'Petición de oración'
-        verbose_name_plural = 'Peticiones de oración'
+        db_table = 'nuevos_miembros'
+        verbose_name = 'Nuevo Miembro'
+        verbose_name_plural = 'Nuevos Miembros'
     
     def __str__(self):
-        return f"Oración por {self.prayer_for}"
+        return f"{self.nombre} - {self.iglesia.nombre}"
 
-class NewMemberFollowup(models.Model):
-    STATUS_CHOICES = [
-        ('pending', 'Pendiente'),
-        ('contacted', 'Contactado'),
-        ('visited', 'Visitado'),
-        ('integrated', 'Integrado'),
+class Oracion(models.Model):
+    ESTADO_CHOICES = [
+        ('pendiente', 'Pendiente'),
+        ('respondida', 'Respondida'),
     ]
     
-    member = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='followups')
-    church = models.ForeignKey(Church, on_delete=models.CASCADE, related_name='followups')
-    invited_by = models.CharField('Invitado por', max_length=200)
-    follow_up_notes = models.TextField('Notas de seguimiento', blank=True)
-    next_follow_up_date = models.DateField('Próximo seguimiento')
-    status = models.CharField('Estado', max_length=15, choices=STATUS_CHOICES, default='pending')
-    created_at = models.DateTimeField('Fecha de creación', auto_now_add=True)
+    id = models.CharField(max_length=36, primary_key=True, default=uuid.uuid4, editable=False)
+    iglesia = models.ForeignKey(Iglesia, on_delete=models.CASCADE, db_column='iglesia_id')
+    solicitante = models.CharField(max_length=255)
+    para_quien = models.CharField(max_length=255, blank=True, null=True)
+    motivo = models.TextField(blank=True, null=True)
+    estado = models.CharField(max_length=15, choices=ESTADO_CHOICES, default='pendiente')
+    fecha = models.DateField(auto_now_add=True)
     
     class Meta:
-        verbose_name = 'Seguimiento de nuevo miembro'
-        verbose_name_plural = 'Seguimientos de nuevos miembros'
+        db_table = 'oraciones'
+        verbose_name = 'Oración'
+        verbose_name_plural = 'Oraciones'
     
     def __str__(self):
-        return f"Seguimiento: {self.member.full_name}"
+        return f"Oración por {self.para_quien or self.solicitante} - {self.iglesia.nombre}"
