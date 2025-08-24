@@ -147,7 +147,7 @@ class OracionAdmin(admin.ModelAdmin):
         }),
     )
     
-    # Método personalizado para mostrar motivo corto
+    # Método personalizado para mostrar motivo corto, 
     def motivo_corto(self, obj):
         if obj.motivo:
             return obj.motivo[:50] + "..." if len(obj.motivo) > 50 else obj.motivo
