@@ -1,0 +1,91 @@
+---
+import "../styles/global.css";
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{title} | TuIglesia.net</title>
+    <meta name="viewport" content="width=device-width" />
+  </head>
+  <body class="bg-gray-50 flex min-h-screen font-sans">
+    <aside
+      class="w-64 bg-primary text-white flex flex-col fixed h-full shadow-xl z-10"
+    >
+      <div class="p-6 border-b border-white/10">
+        <div class="flex items-center gap-3">
+          <div class="text-secondary text-4xl">⛪</div>
+          <div>
+            <h1 class="text-xl font-bold leading-none">Tu Iglesia</h1>
+            <p class="text-xs text-secondary text-right">.net</p>
+          </div>
+        </div>
+      </div>
+
+      <nav class="flex-1 py-6 px-3 space-y-1">
+        <a
+          href="/"
+          class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 transition-colors text-sm font-medium"
+        >
+          🏠 Inicio
+        </a>
+        <a
+          href="/oracion"
+          class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 transition-colors text-sm font-medium"
+        >
+          🙏 Oración
+        </a>
+        <a
+          href="/miembros"
+          class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 transition-colors text-sm font-medium"
+        >
+          👥 Miembros
+        </a>
+        <a
+          href="/finanzas"
+          class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 transition-colors text-sm font-medium"
+        >
+          💰 Finanzas
+        </a>
+        <a
+          href="/admin"
+          class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 transition-colors text-sm font-medium"
+        >
+          ⚙️ Configuración
+        </a>
+        <div class="pt-4 mt-4 border-t border-white/10">
+          <a
+            href="/ia"
+            class="flex items-center gap-3 px-4 py-3 rounded-lg bg-secondary/20 text-secondary hover:bg-secondary/30 transition-colors text-sm font-bold"
+          >
+            🤖 Consejería IA
+          </a>
+        </div>
+      </nav>
+
+      <div class="p-4 text-xs text-gray-400 text-center">
+        © 2026 TuIglesia.net
+      </div>
+    </aside>
+
+    <main class="ml-64 flex-1 p-8">
+      <header
+        class="mb-8 border-b border-gray-200 pb-4 flex justify-between items-center"
+      >
+        <h2 class="text-3xl font-bold text-primary">{title}</h2>
+        <div class="flex items-center gap-2">
+          <span class="text-sm text-gray-500">Hola, Pastor Cristian</span>
+          <div
+            class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold"
+          >
+            C
+          </div>
+        </div>
+      </header>
+
+      <slot />
+    </main>
+  </body>
+</html>
