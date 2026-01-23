@@ -1,0 +1,27 @@
+package net.tuiglesia.api.model;
+
+import jakarta.persistence.*;
+import lombok.Data;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+@Data
+@Entity
+@Table(name = "ofrendas")
+public class Ofrenda {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private BigDecimal monto;
+
+    @Column(nullable = false)
+    private LocalDate fecha;
+
+    private String tipo; // "General", "Misiones", "Pro-Templo"
+
+    @ManyToOne
+    @JoinColumn(name = "iglesia_id", nullable = false)
+    private Iglesia iglesia;
+}
