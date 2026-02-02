@@ -40,4 +40,8 @@ public class Miembro {
     @JoinColumn(name = "iglesia_id", nullable = false) // Crea la llave foránea en BD
     @JsonIgnore // Evita un bucle infinito al convertir a JSON
     private Iglesia iglesia;
+
+    @OneToMany(mappedBy = "miembro", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private java.util.List<Diezmo> diezmos;
 }

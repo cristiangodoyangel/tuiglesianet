@@ -1,0 +1,16 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import FormularioMiembro from "../../components/miembros/FormularioMiembro.jsx";
+---
+
+<MainLayout title="Registro de Miembros">
+  <div class="mb-6 flex justify-between items-center">
+    <div>
+        <h1 class="text-2xl font-bold text-[#15344f]">Gestión de Miembros</h1>
+        <p class="text-gray-600 text-sm">Ingresa los datos del nuevo miembro de la congregación.</p>
+    </div>
+    <a href="/" class="text-[#15344f] hover:underline">← Volver al Panel</a>
+  </div>
+
+  <FormularioMiembro client:load />
+</MainLayout>

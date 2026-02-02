@@ -34,4 +34,34 @@ public class MiembroController {
     public List<Miembro> listarPorIglesia(@RequestParam Long iglesiaId) {
         return miembroRepository.findByIglesiaId(iglesiaId);
     }
+
+    @GetMapping("/{id}")
+    public Miembro obtenerPorId(@PathVariable Long id) {
+        return miembroRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Miembro no encontrado"));
+    }
+
+    @PutMapping("/{id}")
+    public Miembro actualizarMiembro(@PathVariable Long id, @RequestBody Miembro miembroActualizado) {
+        return miembroRepository.findById(id)
+                .map(miembro -> {
+                    miembro.setNombre(miembroActualizado.getNombre());
+                    miembro.setApellidos(miembroActualizado.getApellidos());
+                    miembro.setEmail(miembroActualizado.getEmail());
+                    miembro.setTelefono(miembroActualizado.getTelefono());
+                    miembro.setFechaNacimiento(miembroActualizado.getFechaNacimiento());
+                    miembro.setEstado(miembroActualizado.getEstado());
+                    miembro.setNotasSeguimiento(miembroActualizado.getNotasSeguimiento());
+                    return miembroRepository.save(miembro);
+                })
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Miembro no encontrado"));
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminarMiembro(@PathVariable Long id) {
+        if (!miembroRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Miembro no encontrado");
+        }
+        miembroRepository.deleteById(id);
+    }
 }
