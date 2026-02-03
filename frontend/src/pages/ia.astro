@@ -1,0 +1,28 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import { Sparkles } from "lucide-react";
+---
+
+<MainLayout title="Consejería con IA">
+    <div
+        class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 text-center"
+    >
+        <div
+            class="w-16 h-16 bg-purple-50 text-purple-600 rounded-full flex items-center justify-center mx-auto mb-4"
+        >
+            <Sparkles className="w-8 h-8" />
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-2">
+            Asistente Pastoral con IA
+        </h3>
+        <p class="text-gray-500 max-w-md mx-auto">
+            Obtén sugerencias bíblicas, ideas para sermones y apoyo en
+            consejería pastoral potenciado por Inteligencia Artificial.
+            <br />
+            <span
+                class="text-xs font-semibold bg-purple-100 text-purple-700 px-2 py-1 rounded-full mt-2 inline-block"
+                >Beta</span
+            >
+        </p>
+    </div>
+</MainLayout>

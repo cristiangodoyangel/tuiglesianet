@@ -11,6 +11,8 @@ import {
   Sparkles,
   Calendar,
   UserPlus,
+  BookOpen,
+  Archive,
 } from "lucide-react";
 ---
 
@@ -79,12 +81,31 @@ import {
           Configuración
         </a>
         <div class="pt-4 mt-4 border-t border-secondary">
+          <p
+            class="px-4 text-xs font-semibold text-blue-200 uppercase tracking-wider mb-2"
+          >
+            Premium
+          </p>
           <a
             href="/ia"
             class="flex items-center gap-3 px-4 py-3 rounded-lg text-white hover:bg-secondary/30 transition-colors text-sm font-bold"
           >
             <Sparkles className="w-5 h-5" />
-            Consejería IA
+            Consejería
+          </a>
+          <a
+            href="/bosquejos"
+            class="flex items-center gap-3 px-4 py-3 rounded-lg text-white hover:bg-secondary/30 transition-colors text-sm font-medium"
+          >
+            <BookOpen className="w-5 h-5" />
+            Bosquejos Bíblicos
+          </a>
+          <a
+            href="/materiales"
+            class="flex items-center gap-3 px-4 py-3 rounded-lg text-white hover:bg-secondary/30 transition-colors text-sm font-medium"
+          >
+            <Archive className="w-5 h-5" />
+            Material para Iglesias
           </a>
         </div>
       </nav>

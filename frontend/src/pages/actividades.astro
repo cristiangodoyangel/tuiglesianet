@@ -1,0 +1,28 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import { Calendar } from "lucide-react";
+---
+
+<MainLayout title="Calendario de Actividades">
+    <div
+        class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 text-center"
+    >
+        <div
+            class="w-16 h-16 bg-orange-50 text-orange-600 rounded-full flex items-center justify-center mx-auto mb-4"
+        >
+            <Calendar className="w-8 h-8" />
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-2">
+            Actividades y Eventos
+        </h3>
+        <p class="text-gray-500 max-w-md mx-auto">
+            Aquí podrás gestionar el calendario de eventos y actividades de la
+            iglesia.
+            <br />
+            <span
+                class="text-xs font-semibold bg-orange-100 text-orange-700 px-2 py-1 rounded-full mt-2 inline-block"
+                >Próximamente</span
+            >
+        </p>
+    </div>
+</MainLayout>

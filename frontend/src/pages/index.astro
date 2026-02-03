@@ -12,29 +12,59 @@ import Dashboard from "../components/Dashboard.jsx";
 
   <Dashboard client:load />
 
-  <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
       <h3 class="font-bold text-primary mb-2 text-lg">
-        📅 Próximas Actividades
+        📅 Actividades de la Semana
       </h3>
       <ul class="space-y-3 mt-4">
-        <li class="flex items-center gap-3 text-sm">
-          <span class="w-2 h-2 rounded-full bg-secondary"></span>
-          <span>Culto Dominical - 10:00 AM</span>
+        <li
+          class="flex items-center gap-3 text-sm p-3 hover:bg-gray-50 rounded-lg transition-colors border border-transparent hover:border-gray-100"
+        >
+          <div
+            class="flex flex-col items-center justify-center w-12 h-12 bg-blue-50 text-blue-600 rounded-lg font-bold text-xs"
+          >
+            <span>DOM</span>
+            <span class="text-base">10</span>
+          </div>
+          <div>
+            <p class="font-semibold text-gray-800">Culto Dominical</p>
+            <p class="text-xs text-gray-500">10:00 AM - Templo Principal</p>
+          </div>
         </li>
-        <li class="flex items-center gap-3 text-sm">
-          <span class="w-2 h-2 rounded-full bg-green-500"></span>
-          <span>Reunión de Jóvenes - Vie 19:00</span>
+        <li
+          class="flex items-center gap-3 text-sm p-3 hover:bg-gray-50 rounded-lg transition-colors border border-transparent hover:border-gray-100"
+        >
+          <div
+            class="flex flex-col items-center justify-center w-12 h-12 bg-green-50 text-green-600 rounded-lg font-bold text-xs"
+          >
+            <span>VIE</span>
+            <span class="text-base">15</span>
+          </div>
+          <div>
+            <p class="font-semibold text-gray-800">Reunión de Jóvenes</p>
+            <p class="text-xs text-gray-500">19:00 PM - Salón Multiuso</p>
+          </div>
         </li>
       </ul>
     </div>
 
-    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-      <h3 class="font-bold text-primary mb-2 text-lg">📊 Crecimiento</h3>
-      <div class="flex items-end gap-2 mt-4">
-        <span class="text-4xl font-bold text-primary">12</span>
-        <span class="text-sm text-gray-500 mb-1">nuevos miembros este mes</span>
+    <div
+      class="bg-gradient-to-br from-[#15344f] to-[#0f2538] p-6 rounded-xl shadow-lg text-white relative overflow-hidden"
+    >
+      <div
+        class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-[#cea14d] rounded-full blur-3xl opacity-20"
+      >
       </div>
+      <h3 class="font-bold text-white mb-4 text-lg relative z-10">
+        📖 Versículo del Día
+      </h3>
+      <blockquote class="italic text-gray-300 text-lg relative z-10">
+        "Todo lo puedo en Cristo que me fortalece."
+      </blockquote>
+      <p class="text-right text-[#cea14d] font-bold mt-4 relative z-10">
+        - Filipenses 4:13
+      </p>
     </div>
   </div>
 </MainLayout>

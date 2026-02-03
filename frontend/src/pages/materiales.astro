@@ -1,0 +1,28 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import { Archive } from "lucide-react";
+---
+
+<MainLayout title="Material para Iglesias">
+    <div
+        class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 text-center"
+    >
+        <div
+            class="w-16 h-16 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4"
+        >
+            <Archive className="w-8 h-8" />
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-2">
+            Material para Iglesias
+        </h3>
+        <p class="text-gray-500 max-w-md mx-auto">
+            Descarga recursos gráficos, plantillas de documentos y guías
+            administrativas.
+            <br />
+            <span
+                class="text-xs font-semibold bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full mt-2 inline-block"
+                >Premium</span
+            >
+        </p>
+    </div>
+</MainLayout>
