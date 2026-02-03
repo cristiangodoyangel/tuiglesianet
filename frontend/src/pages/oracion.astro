@@ -1,28 +1,17 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import { HeartHandshake } from "lucide-react";
+import MuroOracion from "../components/MuroOracion.jsx";
 ---
 
 <MainLayout title="Peticiones de Oración">
-    <div
-        class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 text-center"
-    >
-        <div
-            class="w-16 h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4"
-        >
-            <HeartHandshake className="w-8 h-8" />
-        </div>
-        <h3 class="text-xl font-bold text-gray-800 mb-2">
-            Peticiones de Oración
-        </h3>
-        <p class="text-gray-500 max-w-md mx-auto">
-            Este módulo permitirá gestionar y orar por las necesidades de la
-            congregación.
-            <br />
-            <span
-                class="text-xs font-semibold bg-blue-100 text-blue-700 px-2 py-1 rounded-full mt-2 inline-block"
-                >Próximamente</span
-            >
+    <div class="mb-6">
+        <h1 class="text-2xl font-bold text-[#15344f] flex items-center gap-2">
+            🙏 Centro de Oración
+        </h1>
+        <p class="text-gray-500">
+            Oraciones y celebra las victorias con la congregación.
         </p>
     </div>
+
+    <MuroOracion client:load />
 </MainLayout>
