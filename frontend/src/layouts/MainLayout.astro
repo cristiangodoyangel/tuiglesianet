@@ -1,12 +1,15 @@
 ---
 import "../styles/global.css";
 const { title } = Astro.props;
+import logo from "../assets/img/logo.png";
 ---
 
 <!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favico.ico" />
     <title>{title} | TuIglesia.net</title>
     <meta name="viewport" content="width=device-width" />
   </head>
@@ -16,11 +19,7 @@ const { title } = Astro.props;
     >
       <div class="p-6 border-b border-white/10">
         <div class="flex items-center gap-3">
-          <div class="text-secondary text-4xl">⛪</div>
-          <div>
-            <h1 class="text-xl font-bold leading-none">Tu Iglesia</h1>
-            <p class="text-xs text-secondary text-right">.net</p>
-          </div>
+          <img src={logo.src} class="w-48" alt="Logo" />
         </div>
       </div>
 

@@ -1,18 +1,34 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-export default function FormularioMiembro() {
+export default function FormularioMiembro({ id }) {
     const [formData, setFormData] = useState({
         nombre: '',
         apellidos: '',
         email: '',
         telefono: '',
         fechaNacimiento: '',
-        estado: 'VISITA_PRIMERA_VEZ', // Default value from Enum
+        estado: 'VISITA_PRIMERA_VEZ',
         notasSeguimiento: ''
     });
     const [mensaje, setMensaje] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    // Fetch existing data if in Edit Mode
+    React.useEffect(() => {
+        if (id) {
+            const fetchMiembro = async () => {
+                try {
+                    const response = await axios.get(`http://localhost:8080/api/miembros/${id}`);
+                    setFormData(response.data);
+                } catch (error) {
+                    console.error("Error fetching member:", error);
+                    setMensaje({ type: 'error', text: 'No se pudo cargar la información del miembro.' });
+                }
+            };
+            fetchMiembro();
+        }
+    }, [id]);
 
     const handleChange = (e) => {
         setFormData({
@@ -27,27 +43,39 @@ export default function FormularioMiembro() {
         setMensaje(null);
 
         try {
-            // HARDCODED Iglesia ID = 1 for now, as we verify manual entry.
-            // In a real app, this would come from context/auth.
-            const iglesiaId = 1; 
+            const iglesiaId = 1;
 
-            const response = await axios.post(`http://localhost:8080/api/miembros?iglesiaId=${iglesiaId}`, formData);
-            
-            if (response.status === 200) {
-                setMensaje({ type: 'success', text: '¡Miembro registrado exitosamente!' });
-                setFormData({
-                    nombre: '',
-                    apellidos: '',
-                    email: '',
-                    telefono: '',
-                    fechaNacimiento: '',
-                    estado: 'VISITA_PRIMERA_VEZ',
-                    notasSeguimiento: ''
+            let response;
+            if (id) {
+                // UPDATE
+                response = await axios.put(`http://localhost:8080/api/miembros/${id}`, formData);
+            } else {
+                // CREATE
+                response = await axios.post(`http://localhost:8080/api/miembros?iglesiaId=${iglesiaId}`, formData);
+            }
+
+            if (response.status === 200 || response.status === 201) {
+                setMensaje({
+                    type: 'success',
+                    text: id ? '¡Miembro actualizado exitosamente!' : '¡Miembro registrado exitosamente!'
                 });
+
+                if (!id) {
+                    // Reset form only on Create
+                    setFormData({
+                        nombre: '',
+                        apellidos: '',
+                        email: '',
+                        telefono: '',
+                        fechaNacimiento: '',
+                        estado: 'VISITA_PRIMERA_VEZ',
+                        notasSeguimiento: ''
+                    });
+                }
             }
         } catch (error) {
             console.error(error);
-            setMensaje({ type: 'error', text: 'Error al registrar miembro. Revisa la consola.' });
+            setMensaje({ type: 'error', text: 'Error al guardar. Revisa la consola.' });
         } finally {
             setIsSubmitting(false);
         }
@@ -56,7 +84,7 @@ export default function FormularioMiembro() {
     return (
         <div className="bg-white p-6 rounded-lg shadow-lg max-w-2xl mx-auto border border-gray-100">
             <h2 className="text-2xl font-bold text-[#15344f] mb-6 flex items-center gap-2">
-                <span>👤</span> Nuevo Miembro
+                <span>{id ? '✏️' : '👤'}</span> {id ? 'Editar Miembro' : 'Nuevo Miembro'}
             </h2>
 
             {mensaje && (
@@ -69,16 +97,16 @@ export default function FormularioMiembro() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
-                        <input 
-                            type="text" name="nombre" required 
+                        <input
+                            type="text" name="nombre" required
                             value={formData.nombre} onChange={handleChange}
                             className="w-full rounded-md border-gray-300 shadow-sm focus:border-[#cea14d] focus:ring-[#cea14d] p-2 border"
                         />
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Apellidos</label>
-                        <input 
-                            type="text" name="apellidos" required 
+                        <input
+                            type="text" name="apellidos" required
                             value={formData.apellidos} onChange={handleChange}
                             className="w-full rounded-md border-gray-300 shadow-sm focus:border-[#cea14d] focus:ring-[#cea14d] p-2 border"
                         />
@@ -88,16 +116,16 @@ export default function FormularioMiembro() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                        <input 
-                            type="email" name="email" 
+                        <input
+                            type="email" name="email"
                             value={formData.email} onChange={handleChange}
                             className="w-full rounded-md border-gray-300 shadow-sm focus:border-[#cea14d] focus:ring-[#cea14d] p-2 border"
                         />
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
-                        <input 
-                            type="tel" name="telefono" 
+                        <input
+                            type="tel" name="telefono"
                             value={formData.telefono} onChange={handleChange}
                             className="w-full rounded-md border-gray-300 shadow-sm focus:border-[#cea14d] focus:ring-[#cea14d] p-2 border"
                         />
@@ -107,16 +135,16 @@ export default function FormularioMiembro() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Fecha de Nacimiento</label>
-                        <input 
-                            type="date" name="fechaNacimiento" 
+                        <input
+                            type="date" name="fechaNacimiento"
                             value={formData.fechaNacimiento} onChange={handleChange}
                             className="w-full rounded-md border-gray-300 shadow-sm focus:border-[#cea14d] focus:ring-[#cea14d] p-2 border"
                         />
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Estado</label>
-                        <select 
-                            name="estado" 
+                        <select
+                            name="estado"
                             value={formData.estado} onChange={handleChange}
                             className="w-full rounded-md border-gray-300 shadow-sm focus:border-[#cea14d] focus:ring-[#cea14d] p-2 border bg-white"
                         >
@@ -130,7 +158,7 @@ export default function FormularioMiembro() {
 
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Notas de Seguimiento</label>
-                    <textarea 
+                    <textarea
                         name="notasSeguimiento" rows="3"
                         value={formData.notasSeguimiento} onChange={handleChange}
                         className="w-full rounded-md border-gray-300 shadow-sm focus:border-[#cea14d] focus:ring-[#cea14d] p-2 border"
@@ -139,12 +167,12 @@ export default function FormularioMiembro() {
                 </div>
 
                 <div className="flex justify-end pt-4">
-                    <button 
-                        type="submit" 
+                    <button
+                        type="submit"
                         disabled={isSubmitting}
                         className="bg-[#15344f] text-white px-6 py-2 rounded-md hover:bg-[#0f2538] transition-colors flex items-center gap-2 disabled:opacity-50"
                     >
-                        {isSubmitting ? 'Guardando...' : '💾 Guardar Miembro'}
+                        {isSubmitting ? 'Guardando...' : (id ? '💾 Actualizar Miembro' : '💾 Guardar Miembro')}
                     </button>
                 </div>
             </form>
