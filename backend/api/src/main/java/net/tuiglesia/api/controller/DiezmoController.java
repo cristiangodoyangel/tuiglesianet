@@ -34,4 +34,9 @@ public class DiezmoController {
     public BigDecimal obtenerTotal(@RequestParam Long iglesiaId) {
         return diezmoRepository.sumarTotalPorIglesia(iglesiaId);
     }
+
+    @GetMapping
+    public List<Diezmo> listar(@RequestParam Long iglesiaId) {
+        return diezmoRepository.findByIglesiaId(iglesiaId);
+    }
 }

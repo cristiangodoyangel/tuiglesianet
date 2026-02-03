@@ -1,27 +1,18 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
 import { CircleDollarSign } from "lucide-react";
+import DashboardFinanzas from "../components/DashboardFinanzas";
 ---
 
 <MainLayout title="Finanzas y Diezmos">
-    <div
-        class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 text-center"
-    >
-        <div
-            class="w-16 h-16 bg-green-50 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4"
-        >
-            <CircleDollarSign className="w-8 h-8" />
-        </div>
-        <h3 class="text-xl font-bold text-gray-800 mb-2">
-            Finanzas de la Iglesia
-        </h3>
-        <p class="text-gray-500 max-w-md mx-auto">
-            Control total de diezmos, ofrendas y gastos ministeriales.
-            <br />
-            <span
-                class="text-xs font-semibold bg-green-100 text-green-700 px-2 py-1 rounded-full mt-2 inline-block"
-                >Próximamente</span
-            >
+    <div class="mb-8">
+        <h1 class="text-2xl font-bold text-[#15344f] flex items-center gap-2">
+            <CircleDollarSign className="text-green-600" /> Finanzas de la Iglesia
+        </h1>
+        <p class="text-gray-500">
+            Gestión transparente de diezmos, ofrendas y recursos del reino.
         </p>
     </div>
+
+    <DashboardFinanzas client:load />
 </MainLayout>
