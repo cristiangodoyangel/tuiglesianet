@@ -1,8 +1,10 @@
 package net.tuiglesia.api.model.enums;
 
 public enum EstadoSeguimiento {
-    VISITA_PRIMERA_VEZ,
+    NUEVO_EN_LA_IGLESIA,
     EN_CONSOLIDACION,
+    EN_DISCIPULADO,
     BAUTIZADO,
-    MIEMBRO_ACTIVO
+    MIEMBRO,
+    EN_MINISTERIO
 }

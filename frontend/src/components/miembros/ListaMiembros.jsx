@@ -48,19 +48,23 @@ export default function ListaMiembros() {
 
     const getEstadoBadge = (estado) => {
         const styles = {
-            'VISITA_PRIMERA_VEZ': 'bg-blue-100 text-blue-800',
+            'NUEVO_EN_LA_IGLESIA': 'bg-blue-100 text-blue-800',
             'EN_CONSOLIDACION': 'bg-yellow-100 text-yellow-800',
+            'EN_DISCIPULADO': 'bg-orange-100 text-orange-800',
             'BAUTIZADO': 'bg-purple-100 text-purple-800',
-            'MIEMBRO_ACTIVO': 'bg-green-100 text-green-800'
+            'MIEMBRO': 'bg-green-100 text-green-800',
+            'EN_MINISTERIO': 'bg-indigo-100 text-indigo-800 border border-indigo-200'
         };
         const labels = {
-            'VISITA_PRIMERA_VEZ': 'Visita',
+            'NUEVO_EN_LA_IGLESIA': 'Nuevo',
             'EN_CONSOLIDACION': 'Consolidación',
+            'EN_DISCIPULADO': 'Discipulado',
             'BAUTIZADO': 'Bautizado',
-            'MIEMBRO_ACTIVO': 'Miembro'
+            'MIEMBRO': 'Miembro',
+            'EN_MINISTERIO': 'Ministerio'
         };
         return (
-            <span className={`px-2 py-1 rounded-full text-xs font-semibold ${styles[estado] || 'bg-gray-100 text-gray-800'}`}>
+            <span key={estado} className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${styles[estado] || 'bg-gray-100 text-gray-800'} mr-1 mb-1 inline-block`}>
                 {labels[estado] || estado}
             </span>
         );
@@ -126,7 +130,7 @@ export default function ListaMiembros() {
                                 <tr>
                                     <th className="p-4">Nombre Completo</th>
                                     <th className="p-4">Contacto</th>
-                                    <th className="p-4">Estado</th>
+                                    <th className="p-4">Estado(s)</th>
                                     <th className="p-4">Edad</th>
                                     <th className="p-4 text-right">Acciones</th>
                                 </tr>
@@ -144,7 +148,13 @@ export default function ListaMiembros() {
                                             </div>
                                         </td>
                                         <td className="p-4">
-                                            {getEstadoBadge(miembro.estado)}
+                                            <div className="flex flex-wrap max-w-[200px]">
+                                                {miembro.estados && miembro.estados.length > 0 ? (
+                                                    miembro.estados.map(estado => getEstadoBadge(estado))
+                                                ) : (
+                                                    <span className="text-gray-400 text-xs italic">Sin estado</span>
+                                                )}
+                                            </div>
                                         </td>
                                         <td className="p-4">
                                             {miembro.fechaNacimiento}

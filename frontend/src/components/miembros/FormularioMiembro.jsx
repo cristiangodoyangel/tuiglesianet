@@ -8,11 +8,21 @@ export default function FormularioMiembro({ id }) {
         email: '',
         telefono: '',
         fechaNacimiento: '',
-        estado: 'VISITA_PRIMERA_VEZ',
+        estados: ['NUEVO_EN_LA_IGLESIA'], // Array for multiple statuses
         notasSeguimiento: ''
     });
     const [mensaje, setMensaje] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    // Available statuses
+    const availableStatuses = [
+        { value: 'NUEVO_EN_LA_IGLESIA', label: 'Nuevo en la Iglesia' },
+        { value: 'EN_CONSOLIDACION', label: 'Consolidación' },
+        { value: 'EN_DISCIPULADO', label: 'En Discipulado' },
+        { value: 'BAUTIZADO', label: 'Bautizado' },
+        { value: 'MIEMBRO', label: 'Miembro' },
+        { value: 'EN_MINISTERIO', label: 'En Ministerio' }
+    ];
 
     // Fetch existing data if in Edit Mode
     React.useEffect(() => {
@@ -20,7 +30,10 @@ export default function FormularioMiembro({ id }) {
             const fetchMiembro = async () => {
                 try {
                     const response = await axios.get(`http://localhost:8080/api/miembros/${id}`);
-                    setFormData(response.data);
+                    // Ensure backend returns 'estados' as array
+                    const data = response.data;
+                    if (!data.estados) data.estados = [];
+                    setFormData(data);
                 } catch (error) {
                     console.error("Error fetching member:", error);
                     setMensaje({ type: 'error', text: 'No se pudo cargar la información del miembro.' });
@@ -34,6 +47,19 @@ export default function FormularioMiembro({ id }) {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
+        });
+    };
+
+    const handleStatusChange = (statusValue) => {
+        setFormData(prev => {
+            const currentStatuses = prev.estados || [];
+            if (currentStatuses.includes(statusValue)) {
+                // Remove if already exists
+                return { ...prev, estados: currentStatuses.filter(s => s !== statusValue) };
+            } else {
+                // Add if not exists
+                return { ...prev, estados: [...currentStatuses, statusValue] };
+            }
         });
     };
 
@@ -57,8 +83,13 @@ export default function FormularioMiembro({ id }) {
             if (response.status === 200 || response.status === 201) {
                 setMensaje({
                     type: 'success',
-                    text: id ? '¡Miembro actualizado exitosamente!' : '¡Miembro registrado exitosamente!'
+                    text: id ? '¡Miembro actualizado exitosamente! Redirigiendo...' : '¡Miembro registrado exitosamente! Redirigiendo...'
                 });
+
+                // Redirect after 1.5 seconds
+                setTimeout(() => {
+                    window.location.href = '/miembros';
+                }, 1500);
 
                 if (!id) {
                     // Reset form only on Create
@@ -68,7 +99,7 @@ export default function FormularioMiembro({ id }) {
                         email: '',
                         telefono: '',
                         fechaNacimiento: '',
-                        estado: 'VISITA_PRIMERA_VEZ',
+                        estados: ['NUEVO_EN_LA_IGLESIA'],
                         notasSeguimiento: ''
                     });
                 }
@@ -132,27 +163,29 @@ export default function FormularioMiembro({ id }) {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Fecha de Nacimiento</label>
-                        <input
-                            type="date" name="fechaNacimiento"
-                            value={formData.fechaNacimiento} onChange={handleChange}
-                            className="w-full rounded-md border-gray-300 shadow-sm focus:border-[#cea14d] focus:ring-[#cea14d] p-2 border"
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Estado</label>
-                        <select
-                            name="estado"
-                            value={formData.estado} onChange={handleChange}
-                            className="w-full rounded-md border-gray-300 shadow-sm focus:border-[#cea14d] focus:ring-[#cea14d] p-2 border bg-white"
-                        >
-                            <option value="VISITA_PRIMERA_VEZ">Visita Primera Vez</option>
-                            <option value="EN_CONSOLIDACION">En Consolidación</option>
-                            <option value="MIEMBRO_ACTIVO">Miembro Activo</option>
-                            <option value="BAUTIZADO">Bautizado</option>
-                        </select>
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Fecha de Nacimiento</label>
+                    <input
+                        type="date" name="fechaNacimiento"
+                        value={formData.fechaNacimiento} onChange={handleChange}
+                        className="w-full rounded-md border-gray-300 shadow-sm focus:border-[#cea14d] focus:ring-[#cea14d] p-2 border"
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Estados (Seleccione múltiples)</label>
+                    <div className="grid grid-cols-2 gap-2 p-3 border rounded-md border-gray-200 bg-gray-50">
+                        {availableStatuses.map((status) => (
+                            <label key={status.value} className="flex items-center space-x-2 cursor-pointer hover:bg-white p-1 rounded transition-colors">
+                                <input
+                                    type="checkbox"
+                                    checked={formData.estados?.includes(status.value)}
+                                    onChange={() => handleStatusChange(status.value)}
+                                    className="rounded border-gray-300 text-[#cea14d] focus:ring-[#cea14d]"
+                                />
+                                <span className="text-sm text-gray-700">{status.label}</span>
+                            </label>
+                        ))}
                     </div>
                 </div>
 

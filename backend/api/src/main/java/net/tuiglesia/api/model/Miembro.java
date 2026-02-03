@@ -28,9 +28,11 @@ public class Miembro {
     @Column(name = "fecha_nacimiento")
     private LocalDate fechaNacimiento;
 
+    @ElementCollection(targetClass = EstadoSeguimiento.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "miembro_estados", joinColumns = @JoinColumn(name = "miembro_id"))
     @Enumerated(EnumType.STRING)
-    @Column(name = "estado_seguimiento")
-    private EstadoSeguimiento estado = EstadoSeguimiento.VISITA_PRIMERA_VEZ;
+    @Column(name = "estado")
+    private java.util.Set<EstadoSeguimiento> estados = new java.util.HashSet<>();
 
     private String notasSeguimiento;
 

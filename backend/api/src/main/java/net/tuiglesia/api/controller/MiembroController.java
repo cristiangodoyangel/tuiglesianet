@@ -50,7 +50,7 @@ public class MiembroController {
                     miembro.setEmail(miembroActualizado.getEmail());
                     miembro.setTelefono(miembroActualizado.getTelefono());
                     miembro.setFechaNacimiento(miembroActualizado.getFechaNacimiento());
-                    miembro.setEstado(miembroActualizado.getEstado());
+                    miembro.setEstados(miembroActualizado.getEstados());
                     miembro.setNotasSeguimiento(miembroActualizado.getNotasSeguimiento());
                     return miembroRepository.save(miembro);
                 })
