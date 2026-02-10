@@ -1,22 +1,31 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
 import Dashboard from "../components/Dashboard.jsx";
+import {
+  Book,
+  BookA,
+  BookAIcon,
+  BookCheckIcon,
+  BookOpenText,
+  CalendarClockIcon,
+} from "lucide-react";
 ---
 
 <MainLayout title="Panel General">
   <div class="mb-8 p-4 bg-accent/30 rounded-lg border border-accent">
-    <p class="text-primary font-medium">
-      👋 Bienvenido al sistema de gestión de Ayllu (TuIglesia.net).
-    </p>
+    <p class="text-primary font-medium"></p>
   </div>
 
   <Dashboard client:load />
 
   <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-      <h3 class="font-bold text-primary mb-2 text-lg">
-        📅 Actividades de la Semana
-      </h3>
+      <div class="flex items-center">
+        <CalendarClockIcon ClassName: w-13 h-13 />
+        <h3 class="font-bold text-primary mb-2 text-lg ml-2">
+          Actividades de la Semana
+        </h3>
+      </div>
       <ul class="space-y-3 mt-4">
         <li
           class="flex items-center gap-3 text-sm p-3 hover:bg-gray-50 rounded-lg transition-colors border border-transparent hover:border-gray-100"
@@ -49,15 +58,14 @@ import Dashboard from "../components/Dashboard.jsx";
       </ul>
     </div>
 
-    <div
-      class="bg-gradient-to-br from-[#15344f] to-[#0f2538] p-6 rounded-xl shadow-lg text-white relative overflow-hidden"
-    >
+    <div class="p-6 rounded-xl shadow-lg text-white relative overflow-hidden">
       <div
         class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-[#cea14d] rounded-full blur-3xl opacity-20"
       >
       </div>
-      <h3 class="font-bold text-white mb-4 text-lg relative z-10">
-        📖 Versículo del Día
+
+      <h3 class="font-bold text-primary mb-4 text-lg relative z-10">
+        <BookOpenText ClassName: w-13 h-13 /> 📖 Versículo del Día
       </h3>
       <blockquote class="italic text-gray-300 text-lg relative z-10">
         "Todo lo puedo en Cristo que me fortalece."

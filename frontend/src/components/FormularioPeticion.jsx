@@ -21,7 +21,7 @@ export default function FormularioPeticion({ iglesiaId, onPeticionCreada }) {
                     titulo: 'Petición de Oración',
                     descripcion,
                     solicitante,
-                    oracionPor: oracionPor || solicitante, // Si no especifica, es por sí mismo
+                    oracionPor: oracionPor || solicitante,
                     tipo,
                     iglesia: { id: iglesiaId }
                 }),
@@ -46,7 +46,7 @@ export default function FormularioPeticion({ iglesiaId, onPeticionCreada }) {
             <div className="absolute top-0 left-0 w-2 h-full bg-[#15344f]"></div>
             <h3 className="text-lg font-bold text-[#15344f] mb-4 flex items-center gap-2">
                 <Heart className="text-red-500 fill-current" size={20} />
-                Comparte tu Carga
+                Ingresa una nueva Petición de Oración
             </h3>
 
             <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-12 gap-4">

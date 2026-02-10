@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { MessageCircle, CheckCircle, Clock, Heart, Users, Briefcase, Activity, Share2, Smartphone } from 'lucide-react';
+import { MessageCircle, CheckCircle, Clock, Heart, HeartHandshakeIcon, Users, Briefcase, Activity, Share2, Smartphone, WorkflowIcon, Building2Icon, HeartHandshake, HeartMinusIcon, HeartPulseIcon } from 'lucide-react';
 import FormularioPeticion from './FormularioPeticion';
 
 const TIPO_CONFIG = {
-    SALUD: { label: 'Salud', color: 'bg-red-100 text-red-700', icon: Activity },
-    TRABAJO: { label: 'Trabajo', color: 'bg-green-100 text-green-700', icon: Briefcase },
-    FAMILIA: { label: 'Familia', color: 'bg-purple-100 text-purple-700', icon: Users },
+    SALUD: { label: 'Salud', color: 'bg-red-100 text-secondary', icon: HeartPulseIcon },
+    TRABAJO: { label: 'Trabajo', color: 'bg-red-100 text-secondary', icon: Building2Icon },
+    FAMILIA: { label: 'Familia', color: 'bg-purple-100 text-purple-700', icon: HeartHandshake },
     CONOCER_A_JESUS: { label: 'Salvación', color: 'bg-yellow-100 text-yellow-800', icon: Heart },
     OTRO: { label: 'Petición', color: 'bg-gray-100 text-gray-700', icon: MessageCircle },
 };
@@ -60,7 +60,7 @@ export default function MuroOracion({ iglesiaId = 1 }) {
     const compartirIndividual = (peticion) => {
         let texto = '';
         if (peticion.estado === 'RESPONDIDA') {
-            texto = `🎉 *Testimonio de Respuesta*\n*Dios respondió a:* ${peticion.oracionPor || 'Alguien'}\n*Testimonio:* "${peticion.respuesta}"\n_Celebra con nosotros en TuIglesia.net_`;
+            texto = `🙏 *Testimonio de Respuesta*\n*Dios respondió a:* ${peticion.oracionPor || 'Alguien'}\n*Testimonio:* "${peticion.respuesta}"\n_Dios es bueno! www.tuIglesia.net_`;
         } else {
             texto = `🙏 *Petición de Oración*\n*Por:* ${peticion.oracionPor || 'Alguien'}\n*Motivo:* ${peticion.descripcion}\n_Únete a orar en TuIglesia.net_`;
         }
@@ -80,8 +80,7 @@ export default function MuroOracion({ iglesiaId = 1 }) {
     return (
         <div className="max-w-5xl mx-auto p-4">
 
-            {/* SECCIÓN SUPERIOR: FORMULARIO */}
-            <FormularioPeticion iglesiaId={iglesiaId} onPeticionCreada={fetchPeticiones} />
+
 
             {/* SECCIÓN INFERIOR: MURO DE TARJETAS */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mt-8">
@@ -89,25 +88,25 @@ export default function MuroOracion({ iglesiaId = 1 }) {
                 {/* SIDEBAR: FILTROS Y ESTADÍSTICAS */}
                 <div className="md:col-span-1 space-y-4">
                     <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
-                        <h4 className="font-bold text-gray-700 text-sm mb-3 uppercase tracking-wider">Filtros</h4>
+                        <h4 className="font-bold text-primary text-sm mb-3 uppercase tracking-wider">Filtros</h4>
                         <div className="flex flex-col gap-2">
                             <button
                                 onClick={() => setFiltro('PENDIENTE')}
                                 className={`text-left px-4 py-2 rounded-lg text-sm font-medium transition-colors ${filtro === 'PENDIENTE'
-                                    ? 'bg-blue-50 text-blue-700 border border-blue-100'
+                                    ? 'bg-blue-50 text-primary border border-blue-100'
                                     : 'text-gray-600 hover:bg-gray-50'
                                     }`}
                             >
-                                ⏳ Por Orar
+                                Estamos Orando
                             </button>
                             <button
                                 onClick={() => setFiltro('RESPONDIDA')}
                                 className={`text-left px-4 py-2 rounded-lg text-sm font-medium transition-colors ${filtro === 'RESPONDIDA'
-                                    ? 'bg-amber-50 text-amber-700 border border-amber-100'
+                                    ? 'bg-blue-50 text-primary border border-blue-100'
                                     : 'text-gray-600 hover:bg-gray-50'
                                     }`}
                             >
-                                🎉 Testimonios
+                                Testimonios
                             </button>
                             <button
                                 onClick={() => setFiltro('TODOS')}
@@ -121,11 +120,11 @@ export default function MuroOracion({ iglesiaId = 1 }) {
                         </div>
                     </div>
 
-                    <div className="bg-[#cea14d] text-white rounded-xl p-5 shadow-lg">
+                    <div className="text-primary rounded-xl p-5 shadow-lg">
                         <h4 className="font-bold text-lg mb-2 flex items-center gap-2">
                             <Smartphone size={18} className="text-white" /> Cadena Virtual
                         </h4>
-                        <p className="text-white/90 text-xs italic leading-relaxed mb-3">
+                        <p className="text-secondary text-xs italic leading-relaxed mb-3">
                             Comparte la lista actual de motivos con tu grupo de oración o WhatsApp.
                         </p>
                         <button
@@ -240,6 +239,8 @@ export default function MuroOracion({ iglesiaId = 1 }) {
                     )}
                 </div>
             </div>
+            {/* SECCIÓN SUPERIOR: FORMULARIO */}
+            <FormularioPeticion iglesiaId={iglesiaId} onPeticionCreada={fetchPeticiones} />
         </div>
     );
 }

@@ -48,9 +48,9 @@ export default function ListaMiembros() {
 
     const getEstadoBadge = (estado) => {
         const styles = {
-            'NUEVO_EN_LA_IGLESIA': 'bg-blue-100 text-blue-800',
-            'EN_CONSOLIDACION': 'bg-yellow-100 text-yellow-800',
-            'EN_DISCIPULADO': 'bg-orange-100 text-orange-800',
+            'NUEVO_EN_LA_IGLESIA': 'bg-yellow-100 text-yellow-800',
+            'EN_CONSOLIDACION': 'bg-green-100 text-green-600',
+            'EN_DISCIPULADO': 'bg-green-100 text-blue-800',
             'BAUTIZADO': 'bg-purple-100 text-purple-800',
             'MIEMBRO': 'bg-green-100 text-green-800',
             'EN_MINISTERIO': 'bg-indigo-100 text-indigo-800 border border-indigo-200'
@@ -163,7 +163,7 @@ export default function ListaMiembros() {
                                             <div className="flex justify-end gap-2">
                                                 <a
                                                     href={`/miembros/editar/${miembro.id}`}
-                                                    className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
+                                                    className="p-1.5 text-primary hover:bg-blue-50 rounded-md transition-colors"
                                                     title="Editar"
                                                 >
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -172,7 +172,7 @@ export default function ListaMiembros() {
                                                 </a>
                                                 <button
                                                     onClick={() => handleDeleteClick(miembro.id)}
-                                                    className="p-1.5 text-red-600 hover:bg-red-50 rounded-md transition-colors"
+                                                    className="p-1.5 text-secondary hover:bg-yellow-50 rounded-md transition-colors"
                                                     title="Borrar"
                                                 >
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

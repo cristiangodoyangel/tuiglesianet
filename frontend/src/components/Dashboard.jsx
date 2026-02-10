@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Users, TrendingUp, CircleDollarSign, Calendar } from 'lucide-react';
+import { Users, TrendingUp, CircleDollarSign, Calendar, DollarSignIcon, LucideDollarSign } from 'lucide-react';
 
 export default function Dashboard() {
   const [stats, setStats] = useState({
@@ -44,33 +44,30 @@ export default function Dashboard() {
       title: 'Miembros Totales',
       value: stats.totalMiembros,
       icon: Users,
-      color: 'bg-blue-500',
-      textColor: 'text-blue-600',
-      bg: 'bg-blue-50'
+      color: 'bg-secondary',
+      textColor: 'text-secondary',
+
     },
     {
       title: 'Nuevos este Mes',
       value: `+${stats.miembrosNuevos}`,
       icon: TrendingUp,
-      color: 'bg-green-500',
-      textColor: 'text-green-600',
-      bg: 'bg-green-50'
+      color: 'bg-secondary',
+      textColor: 'text-secondary',
     },
     {
       title: 'Ofrendas (CLP)',
       value: `$${stats.ofrendasMes.toLocaleString()}`,
-      icon: CircleDollarSign,
-      color: 'bg-yellow-500',
-      textColor: 'text-yellow-600',
-      bg: 'bg-yellow-50'
+      icon: DollarSignIcon,
+      color: 'bg-secondary',
+      textColor: 'text-secondary',
     },
     {
       title: 'Asistencia Promedio',
       value: `${stats.asistenciaPromedio}%`,
       icon: Calendar,
-      color: 'bg-indigo-500',
-      textColor: 'text-indigo-600',
-      bg: 'bg-indigo-50'
+      color: 'bg-secondary',
+      textColor: 'text-secondary',
     }
   ];
 

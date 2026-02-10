@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
     DollarSign, TrendingUp, TrendingDown, Calendar,
     PlusCircle, CreditCard, User, FileText, ArrowUpRight, ArrowDownRight,
-    PieChart
+    PieChart, Heart
 } from 'lucide-react';
 
 export default function DashboardFinanzas({ iglesiaId = 1 }) {

@@ -1,23 +1,24 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
 import ListaMiembros from "../../components/miembros/ListaMiembros.jsx";
+import { User, Plus, PlusCircle, PlusSquare } from "lucide-react";
 ---
 
 <MainLayout title="Gestión de Miembros">
     <div class="mb-6 flex justify-between items-center px-1">
         <div>
-            <h1 class="text-2xl font-bold text-[#15344f]">
+            <h1 class="text-2xl font-bold text-primary">
                 Miembros de la Congregación
             </h1>
-            <p class="text-gray-600 text-sm">
+            <p class="text-primary text-sm">
                 Administra la información de las ovejas de tu iglesia.
             </p>
         </div>
         <a
             href="/miembros/nuevo"
-            class="bg-[#cea14d] hover:bg-[#b88f3b] text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors shadow-sm flex items-center gap-2"
+            class="bg-secondary hover:bg-primary hover:text-secondary text-primary px-4 py-2 rounded-lg text-sm font-semibold transition-colors shadow-sm flex items-center gap-2"
         >
-            👤 Nuevo Miembro
+            <PlusCircle className="w-5 h-5" /> Nuevo Miembro
         </a>
     </div>
 
